@@ -1,6 +1,6 @@
 {
   "name": "Zabbix Proxy",
-  "version": "0.3",
+  "version": "0.4",
   "slug": "zabbix-proxy",
   "description": "Zabbix Proxy",
   "url": "https://github.com/bugsbirez/home-assistant-addons/tree/main/zabbix-proxy",
