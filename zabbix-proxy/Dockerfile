@@ -14,6 +14,10 @@ LABEL org.opencontainers.image.authors="Benoit SAGE <bugs@hors-sujet.com>" \
 ENV LANG C.UTF-8
 
 # Copy data for add-on
+RUN apk add --no-cache jq zabbix-sqlite && \
+    addgroup -g 102 docker && \
+    addgroup zabbix docker
+
 COPY run.sh /
 RUN chmod a+x /run.sh
 

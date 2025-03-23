@@ -19,14 +19,10 @@
   "image": "bugsbrhome/home-assistant-addon-{arch}-zabbix-proxy",
   "options": {
     "server": "zabbix-server.local",
-    "serveractive": "zabbix-server.local",
-    "mode": "active",
     "hostname": "homeassistant"
   },
   "schema": {
     "server": "str",
-    "serveractive": "str",
-    "mode": "str",
     "hostname": "str",
     "tlspskidentity": "str?",
     "tlspsksecret": "str?",

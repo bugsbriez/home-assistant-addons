@@ -4,16 +4,14 @@
 # Extract config data
 CONFIG_PATH=/data/options.json
 ZABBIX_SERVER=$(jq --raw-output ".server" "${CONFIG_PATH}")
-ZABBIX_SERVER_ACTIVE=$(jq --raw-output ".serveractive" "${CONFIG_PATH}")
 ZABBIX_HOSTNAME=$(jq --raw-output ".hostname" "${CONFIG_PATH}")
 ZABBIX_TLSPSK_IDENTITY=$(jq --raw-output ".tlspskidentity" "${CONFIG_PATH}")
 ZABBIX_TLSPSK_SECRET=$(jq --raw-output ".tlspsksecret" "${CONFIG_PATH}")
 ZABBIX_USER_PARAMETER=$(jq --raw-output ".userparameter" "${CONFIG_PATH}")
 
-# Update zabbix-agent config
-ZABBIX_CONFIG_FILE=/etc/zabbix/zabbix_agent2.conf
+# Update zabbix-proxy config
+ZABBIX_CONFIG_FILE=/etc/zabbix/zabbix_proxy.conf
 sed -i 's@^\(Server\)=.*@\1='"${ZABBIX_SERVER}"'@' "${ZABBIX_CONFIG_FILE}"
-sed -i 's@^\(ServerActive\)=.*@\1='"${ZABBIX_SERVER_ACTIVE}"'@' "${ZABBIX_CONFIG_FILE}"
 sed -i 's@^#\?\s\?\(Hostname\)=.*@\1='"${ZABBIX_HOSTNAME}"'@' "${ZABBIX_CONFIG_FILE}"
 
 # Add TLS PSK config if variables are used

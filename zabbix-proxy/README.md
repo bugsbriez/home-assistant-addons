@@ -1,4 +1,4 @@
-## Zabbix Agent 2
+## Zabbix Aproxy
 
 Uses zabbix-proxy package from current alpine version.
 
