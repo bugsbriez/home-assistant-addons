@@ -13,12 +13,6 @@ LABEL org.opencontainers.image.authors="Benoit SAGE <bugs@hors-sujet.com>" \
 
 ENV LANG C.UTF-8
 
-# Install requirements for add-on
-RUN apk add --no-cache jq zabbix-proxy && \
-    addgroup -g 102 docker && \
-    addgroup zabbix docker && \
-    mkdir -p /etc/zabbix/zabbix_agent2.d/plugins.d
-
 # Copy data for add-on
 COPY run.sh /
 RUN chmod a+x /run.sh
