@@ -16,7 +16,7 @@
   "ports": {
     "10051/tcp": 10051
   },
-  "image": "bugsbr/home-assistant-addon-{arch}-zabbix-proxy",
+  "image": "bugsbrhome/home-assistant-addon-{arch}-zabbix-proxy",
   "options": {
     "server": "zabbix-server.local",
     "serveractive": "zabbix-server.local",
