@@ -1,13 +1,11 @@
-#!/usr/bin/env ash
-# shellcheck shell=dash
+#!/usr/bin/env bashio
 
 # Extract config data
-CONFIG_PATH=/data/options.json
-ZABBIX_SERVER=$(jq --raw-output ".server" "${CONFIG_PATH}")
-ZABBIX_HOSTNAME=$(jq --raw-output ".hostname" "${CONFIG_PATH}")
-ZABBIX_TLSPSK_IDENTITY=$(jq --raw-output ".tlspskidentity" "${CONFIG_PATH}")
-ZABBIX_TLSPSK_SECRET=$(jq --raw-output ".tlspsksecret" "${CONFIG_PATH}")
-ZABBIX_USER_PARAMETER=$(jq --raw-output ".userparameter" "${CONFIG_PATH}")
+ZABBIX_SERVER=$(bashio::config 'server')
+ZABBIX_HOSTNAME=$(bashio::config 'hostname')
+ZABBIX_TLSPSK_IDENTITY=$(bashio::config 'tlspskidentity')
+ZABBIX_TLSPSK_SECRET=$(bashio::config 'tlspsksecret')
+ZABBIX_USER_PARAMETER=$(bashio::config 'userparameter')
 
 # Update zabbix-proxy config
 ZABBIX_CONFIG_FILE=/etc/zabbix/zabbix_proxy.conf
