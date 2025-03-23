@@ -1,6 +1,6 @@
 {
   "name": "Zabbix Proxy",
-  "version": "0.6",
+  "version": "0.7",
   "slug": "zabbix-proxy",
   "description": "Zabbix Proxy",
   "url": "https://github.com/bugsbirez/home-assistant-addons/tree/main/zabbix-proxy",
@@ -8,7 +8,7 @@
     "aarch64",
     "amd64"
   ],
-  "startup": "system",
+  "startup": "services",
   "boot": "auto",
   "host_network": true,
   "host_ipc": true,
