@@ -151,8 +151,8 @@ update_zbx_config() {
     update_config_var $ZBX_CONFIG "ListenBacklog" "${ZBX_LISTENBACKLOG}"
 
     update_config_var $ZBX_CONFIG "SourceIP" "${ZBX_SOURCEIP}"
-    update_config_var $ZBX_CONFIG "LogType" "file"
-    update_config_var $ZBX_CONFIG "LogFile" "/proc/1/fd/1"
+    update_config_var $ZBX_CONFIG "LogType" "console"
+    update_config_var $ZBX_CONFIG "LogFile"
     update_config_var $ZBX_CONFIG "LogFileSize"
     update_config_var $ZBX_CONFIG "PidFile"
 

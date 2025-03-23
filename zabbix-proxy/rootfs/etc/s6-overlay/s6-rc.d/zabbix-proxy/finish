@@ -1,14 +1,14 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
-# Home Assistant Community Add-on: Grafana
+# Home Assistant Community Add-on: Zabbix Proxy
 # Take down the S6 supervision tree when Grafana fails
 # ==============================================================================
 declare exit_code
 readonly exit_code_container=$(</run/s6-linux-init-container-results/exitcode)
 readonly exit_code_service="${1}"
 readonly exit_code_signal="${2}"
-readonly service="Zabbix-proxy"
+readonly service="zabbix-proxy"
 
 
 bashio::log.info \

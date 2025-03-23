@@ -1,6 +1,6 @@
 {
   "name": "Zabbix Proxy",
-  "version": "0.8",
+  "version": "0.9",
   "slug": "zabbix-proxy",
   "description": "Zabbix Proxy",
   "url": "https://github.com/bugsbirez/home-assistant-addons/tree/main/zabbix-proxy",
@@ -8,12 +8,17 @@
     "aarch64",
     "amd64"
   ],
-  "startup": "services",
+  "startup": "application",
   "boot": "auto",
   "init": false,
   "host_network": true,
   "host_ipc": true,
   "docker_api": true,
+  "map": [
+    "homeassistant_config",
+    "share",
+    "ssl"
+  ],
   "ports": {
     "10051/tcp": 10051
   },

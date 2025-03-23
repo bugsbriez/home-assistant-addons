@@ -1,13 +1,14 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
-# Home Assistant Community Add-on: Grafana
-# Runs the Grafana Server
+# Home Assistant Community Add-on: zabbix proxy
+# Runs the zabbix-proxy
 # ==============================================================================
 
 bashio::log.info 'Starting Zabbix-proxy...'
 
 options+=(--foreground)
-options+=(-c /etc/zabbix/zabbix_proxy.conf)
+options+=("-c")
+options+=("/etc/zabbix/zabbix_proxy.conf")
 
-exec /usr/sbin/zabbix_proxy "${options[@]}"
+exec /usr/sbin/zabbix_proxy "${options[@]}" 2>&1
