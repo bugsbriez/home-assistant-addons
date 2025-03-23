@@ -1,6 +1,15 @@
-#!/usr/bin/env bashio
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Zabbix-prox
+# Configure Zabbix-proxy
+# ==============================================================================
 
-# Extract config data
+# Symlink the new style config directory to the old one. People might have
+# configurations for Grafana that access the database via the old path.
+ln -s "/homeassistant" "/config" \
+    || bashio::log.warning "Failed linking Home Assistant configuration alias"
+
 ZABBIX_SERVER=$(bashio::config 'server')
 ZABBIX_HOSTNAME=$(bashio::config 'hostname')
 ZABBIX_TLSPSK_IDENTITY=$(bashio::config 'tlspskidentity')
@@ -27,6 +36,3 @@ unset ZABBIX_TLSPSK_SECRET
 if [ "${ZABBIX_USER_PARAMETER}" != "null" ]; then
   sed -i 's@^#\?\s\?\(UserParameter\)=.*@\1='"${ZABBIX_USER_PARAMETER}"'@' "${ZABBIX_CONFIG_FILE}"
 fi
-
-# Run zabbix-proxy in foreground
-exec su zabbix -s /bin/ash -c "zabbix_proxy -f"
