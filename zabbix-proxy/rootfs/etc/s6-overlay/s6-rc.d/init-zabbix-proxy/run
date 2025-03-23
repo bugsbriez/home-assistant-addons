@@ -50,20 +50,20 @@ update_config_var() {
     local masklist=("TLSPSKIdentity")
 
     if [ ! -f "$config_path" ]; then
-        echo "**** Configuration file '$config_path' does not exist"
+        bashio::log.info "**** Configuration file '$config_path' does not exist"
         return
     fi
 
     if [[ " ${masklist[@]} " =~ " $var_name " ]] && [ ! -z "$var_value" ]; then
-        echo -n "** Updating '$config_path' parameter \"$var_name\": '****'. Enable DEBUG_MODE to view value ..."
+        bashio::log.info -n "** Updating '$config_path' parameter \"$var_name\": '****'. Enable DEBUG_MODE to view value ..."
     else
-        echo -n "** Updating '$config_path' parameter \"$var_name\": '$var_value'..."
+        bashio::log.info -n "** Updating '$config_path' parameter \"$var_name\": '$var_value'..."
     fi
 
     # Remove configuration parameter definition in case of unset or empty parameter value
     if [ -z "$var_value" ]; then
         sed -i -e "/^$var_name=/d" "$config_path"
-        echo "removed"
+        bashio::log.info "removed"
         return
     fi
 
@@ -74,7 +74,7 @@ update_config_var() {
         else
             sed -i -e "/^[#;] $var_name=/s/.*/&\n$var_name=/" "$config_path"
         fi
-        echo "undefined"
+        bashio::log.info "undefined"
         return
     fi
 
@@ -88,16 +88,16 @@ update_config_var() {
     var_name=$(escape_spec_char "$var_name")
 
     if [ "$(grep -E "^$var_name=$var_value$" $config_path)" ]; then
-        echo "exists"
+        bashio::log.info "exists"
     elif [ "$(grep -E "^$var_name=" $config_path)" ] && [ "$is_multiple" != "true" ]; then
         sed -i -e "/^$var_name=/s/=.*/=$var_value/" "$config_path"
-        echo "updated"
+        bashio::log.info "updated"
     elif [ "$(grep -Ec "^# $var_name=" $config_path)" -gt 1 ]; then
         sed -i -e  "/^[#;] $var_name=$/i\\$var_name=$var_value" "$config_path"
-        echo "added first occurrence"
+        bashio::log.info "added first occurrence"
     else
         sed -i -e "/^[#;] $var_name=/s/.*/&\n$var_name=$var_value/" "$config_path"
-        echo "added"
+        bashio::log.info "added"
     fi
 
 }
@@ -132,7 +132,7 @@ file_process_from_env() {
 }
 
 update_zbx_config() {
-    echo "** Preparing Zabbix proxy configuration file"
+    bashio::log.info "** Preparing Zabbix proxy configuration file"
 
     ZBX_CONFIG=${ZABBIX_CONF_DIR}/zabbix_proxy.conf
 
@@ -151,8 +151,9 @@ update_zbx_config() {
     update_config_var $ZBX_CONFIG "ListenBacklog" "${ZBX_LISTENBACKLOG}"
 
     update_config_var $ZBX_CONFIG "SourceIP" "${ZBX_SOURCEIP}"
-    update_config_var $ZBX_CONFIG "LogType" "console"
-    update_config_var $ZBX_CONFIG "LogFile"
+    update_config_var $ZBX_CONFIG "LogType" "file"
+    mkdir -p /data/logs/
+    update_config_var $ZBX_CONFIG "LogFile" "/data/logs/zabbix-proxy.log"
     update_config_var $ZBX_CONFIG "LogFileSize"
     update_config_var $ZBX_CONFIG "PidFile"
 
@@ -167,7 +168,7 @@ update_zbx_config() {
         update_config_var $ZBX_CONFIG "DBName" "${ZABBIX_USER_HOME_DIR}/db_data/${ZBX_HOSTNAME:-"zabbix-proxy-sqlite3"}.sqlite"
     else
         node_name=$(uname -n)
-        update_config_var $ZBX_CONFIG "DBName" "${ZABBIX_USER_HOME_DIR}/db_data/$node_name.sqlite"
+        update_config_var $ZBX_CONFIG "DBName" "/data/$node_name.sqlite"
     fi
     update_config_var $ZBX_CONFIG "DBUser"
     update_config_var $ZBX_CONFIG "DBPort"
@@ -294,7 +295,7 @@ clear_zbx_env() {
 }
 
 prepare_proxy() {
-    echo "Preparing Zabbix proxy"
+    bashio::log.info "Preparing Zabbix proxy"
 
     update_zbx_config
     clear_zbx_env
@@ -302,5 +303,4 @@ prepare_proxy() {
 
 #################################################
 prepare_proxy
-
 #################################################
