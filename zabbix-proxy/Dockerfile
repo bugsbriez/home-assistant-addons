@@ -7,8 +7,6 @@ FROM ${BUILD_BASE_IMAGE} AS builder
 
 FROM  ghcr.io/hassio-addons/base:17.2.1
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 LABEL org.opencontainers.image.authors="Benoit SAGE <bugs@hors-sujet.com>" \
       org.opencontainers.image.url="https://github.com/bugsbriez/home-assistant-addons/tree/main/zabbix-proxy" \
       org.opencontainers.image.title="Zabbix Proxy image for Home Assistant Add-on" \
