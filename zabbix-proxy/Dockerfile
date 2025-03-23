@@ -19,7 +19,3 @@ RUN apk add --no-cache jq zabbix-sqlite && \
     addgroup -g 102 docker && \
     addgroup zabbix docker
 
-COPY run.sh /
-RUN chmod a+x /run.sh
-
-CMD [ "/run.sh" ]
