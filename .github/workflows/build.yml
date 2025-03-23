@@ -36,6 +36,12 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Docker login
+        uses: azure/docker-login@v1
+        with:
+          username: ${{ secret.DOCKER_USERNAME }}
+          password: ${{ secret.DOCKER_PASSWORD }}
+
       - name: Build ${{ matrix.addon }} - ${{ matrix.arch }}
         run: |
           ./build.sh ${{ matrix.addon }} ${{ matrix.arch }}
